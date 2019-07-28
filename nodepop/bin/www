@@ -7,8 +7,6 @@
 var app = require("../app");
 var debug = require("debug")("nodepop:server");
 var http = require("http");
-var db = require("../lib/db");
-var createError = require("http-errors");
 
 /**
  * Get port from environment and store in Express.
@@ -16,18 +14,6 @@ var createError = require("http-errors");
 
 var port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
-
-/**
- * Create mongodb conection
- */
-app.use(function(req, res, next) {
-  if (db.connection.readyState !== 1)
-    throw createError(1100, "No database connection");
-  next();
-});
-
-db.connect();
-// db.disconnect();
 
 /**
  * Create HTTP server.

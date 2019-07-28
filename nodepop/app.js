@@ -5,9 +5,11 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const db = require("./lib/db");
 
-var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+const indexRouter = require("./routes/index");
+const adsRouter = require("./routes/apiv1/advertisements");
+// var usersRouter = require("./routes/users");
 
 var app = express();
 
@@ -27,8 +29,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
+/**
+ * Create mongodb conection
+ */
+app.use(function(req, res, next) {
+  if (db.connection.readyState !== 1)
+    throw createError(1100, "No database connection");
+  next();
+});
+
+db.connect();
+// db.disconnect();
+
+/**
+ * Rutas de mi API
+ */
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/apiv1/anuncios", adsRouter);
+
+// app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
