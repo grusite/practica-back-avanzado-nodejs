@@ -8,6 +8,7 @@ Repositorio usado para realizar la práctica del tercer módulo del bootcamp -> 
 > npm i
 
 - MondoDB: To start a local server execute `mongod --dbpath='/home/grusite/data/db'`
+- To start the server execute `npm run dev`
 
 * models -> donde guardamos los modelos de la BBDD
 * controllers -> donde guardamos los controladores de las rutas

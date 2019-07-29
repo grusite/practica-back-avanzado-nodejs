@@ -10,8 +10,10 @@ module.exports = {
   async listAds(req, res, next) {
     try {
       const name = req.query.name;
-      const age = req.query.age;
-      const skip = parseInt(req.query.skip);
+      const sold = req.query.sold;
+      const price = req.query.price;
+      const tag = req.query.tag;
+      const skip = parseInt(req.query.start);
       const limit = parseInt(req.query.limit);
       const fields = req.query.fields;
       const sort = req.query.sort;
@@ -22,9 +24,30 @@ module.exports = {
         filter.name = name;
       }
 
-      if (typeof age !== "undefined") {
-        filter.age = age;
+      if (typeof sold !== "undefined") {
+        filter.sold = sold;
       }
+
+      if (price) {
+        filter.price = price;
+      }
+
+      if (tag) {
+        filter.tags = tag;
+      }
+
+      console.log("req.query ", req.query);
+      console.log("filter ", filter);
+      console.log(
+        "Skip " +
+          skip +
+          " limit " +
+          limit +
+          " fields " +
+          fields +
+          " sort " +
+          sort
+      );
 
       const ads = await Ad.list({
         filter: filter,
@@ -51,7 +74,9 @@ module.exports = {
       const ad = await Ad.findById(_id).exec();
 
       if (!ad) {
-        res.status(404).json({ success: false });
+        res
+          .status(404)
+          .json({ success: false, message: "Advertisement Not Found" });
         return;
       }
 
@@ -88,9 +113,20 @@ module.exports = {
       const _id = req.params.id;
       const data = req.body;
 
-      const adSaved = await Ad.findOneAndUpdate({ _id: _id }, data, {
-        new: true
-      }).exec();
+      const adSaved = await Ad.findOneAndUpdate(
+        { _id: _id },
+        { $set: data },
+        {
+          new: true
+        }
+      ).exec();
+
+      if (!adSaved) {
+        res
+          .status(404)
+          .json({ success: false, message: "Advertisement Not Found" });
+        return;
+      }
 
       res.json({ success: true, result: adSaved });
     } catch (err) {
@@ -106,7 +142,16 @@ module.exports = {
     try {
       const _id = req.params.id;
 
-      await Ad.deleteOne({ _id: _id }).exec();
+      const ad = await Ad.findById(_id).exec();
+
+      if (!ad) {
+        res
+          .status(404)
+          .json({ success: false, message: "Advertisement Not Found" });
+        return;
+      }
+
+      await Ad.deleteOne(ad).exec();
 
       res.json({ success: true });
     } catch (err) {

@@ -3,10 +3,10 @@
 const mongoose = require("mongoose");
 
 const advertisementSchema = mongoose.Schema({
-  nombre: String,
-  venta: Boolean,
-  precio: Number,
-  foto: String,
+  name: String,
+  sold: Boolean,
+  price: Number,
+  picture: String,
   tags: [String]
 });
 
@@ -17,11 +17,11 @@ advertisementSchema.statics.list = function({
   fields,
   sort
 }) {
-  const query = Ad.find(filter);
-  query.skip(skip);
-  query.limit(limit);
-  query.select(fields);
-  query.sort(sort);
+  const query = this.find(filter)
+    .skip(skip)
+    .limit(limit)
+    .select(fields)
+    .sort(sort);
   return query.exec();
 };
 
