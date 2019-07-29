@@ -10,7 +10,7 @@ function connect() {
   debug("connect", new URL(uri).host);
   mongoose.connect(
     uri,
-    { useNewUrlParser: true, useFindAndModify: false },
+    { useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true },
     err => {
       if (err) {
         debug(

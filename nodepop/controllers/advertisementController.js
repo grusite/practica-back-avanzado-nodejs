@@ -21,7 +21,7 @@ module.exports = {
       const filter = {};
 
       if (name) {
-        filter.name = name;
+        filter.name = new RegExp("^" + name, "i");
       }
 
       if (typeof sold !== "undefined") {
@@ -29,25 +29,28 @@ module.exports = {
       }
 
       if (price) {
-        filter.price = price;
+        const greater = /^[0-9]+-$/g.test(price);
+        const between = /^[0-9]+-[0-9]+$/g.test(price);
+        const less = /^-[0-9]+$/g.test(price);
+
+        const [gte, lte] = price.split("-");
+
+        if (greater) {
+          filter.price = { $gte: gte };
+        } else if (between) {
+          filter.price = { $gte: gte, $lte: lte };
+        } else if (less) {
+          filter.price = { $lte: lte };
+        } else {
+          filter.price = price;
+        }
       }
 
       if (tag) {
-        filter.tags = tag;
+        filter.tags = { $in: tag };
       }
 
-      console.log("req.query ", req.query);
-      console.log("filter ", filter);
-      console.log(
-        "Skip " +
-          skip +
-          " limit " +
-          limit +
-          " fields " +
-          fields +
-          " sort " +
-          sort
-      );
+      console.log(filter);
 
       const ads = await Ad.list({
         filter: filter,
@@ -81,6 +84,19 @@ module.exports = {
       }
 
       res.json({ success: true, result: ad });
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  /**
+   * GET /tags
+   * Devuelve los tags únicos existentes
+   */
+  async listTags(req, res, next) {
+    try {
+      const uniqueTags = await Ad.find().distinct("tags");
+      res.json({ success: true, result: uniqueTags });
     } catch (err) {
       next(err);
     }

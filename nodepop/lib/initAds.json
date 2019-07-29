@@ -1,0 +1,46 @@
+{
+  "anuncios": [
+    {
+      "name": "Bicicleta",
+      "sold": true,
+      "price": 230.15,
+      "picture": "bici.jpg",
+      "tags": ["lifestyle", "motor"]
+    },
+    {
+      "name": "Kawasaki Ninja",
+      "sold": false,
+      "price": 3500.0,
+      "picture": "kawa.jpg",
+      "tags": ["motor"]
+    },
+    {
+      "name": "iPhone 3GS",
+      "sold": false,
+      "price": 50.0,
+      "picture": "iphone.png",
+      "tags": ["lifestyle", "mobile"]
+    },
+    {
+      "name": "Samsung S10",
+      "sold": true,
+      "price": 500.5,
+      "picture": "samsung.png",
+      "tags": ["mobile"]
+    },
+    {
+      "name": "Monitor HP Full HD",
+      "sold": true,
+      "price": 37.0,
+      "picture": "monitorHP.png",
+      "tags": ["lifestyle", "work"]
+    },
+    {
+      "nombre": "Teclado Logitech",
+      "sold": false,
+      "price": 5.0,
+      "picture": "tecladoLogitech.png",
+      "tags": ["work"]
+    }
+  ]
+}

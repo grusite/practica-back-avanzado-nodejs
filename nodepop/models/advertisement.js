@@ -7,8 +7,13 @@ const advertisementSchema = mongoose.Schema({
   sold: Boolean,
   price: Number,
   picture: String,
-  tags: [String]
+  tags: {
+    type: [String],
+    enum: ["lifestyle", "motor", "mobile", "work"]
+  }
 });
+
+advertisementSchema.index({ tags: 1, sold: 1, price: 1, name: 1 });
 
 advertisementSchema.statics.list = function({
   filter,
