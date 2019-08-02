@@ -1,0 +1,18 @@
+<section class="ads-list">
+  <h2>Lista de anuncios</h2>
+  <hr />
+  <div class="ads-content">
+    <% ads.forEach ( ad => { %>
+    <h3><%= ad.name %></h3>
+    <% if (ad.sold === true) { %>
+    <p>En venta</p>
+    <% } else { %>
+    <p>Se compra</p>
+    <% } %>
+    <p><%= ad.price %>€</p>
+    <p>tags: <%= ad.tags %></p>
+    <img src="<%= ad.picture %>" />
+    <hr />
+    <% }); %>
+  </div>
+</section>

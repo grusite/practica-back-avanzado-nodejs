@@ -4,42 +4,42 @@
       "name": "Bicicleta",
       "sold": true,
       "price": 230.15,
-      "picture": "../public/images/bicycle.jpg",
+      "picture": "/images/bicycle.jpg",
       "tags": ["lifestyle", "motor"]
     },
     {
       "name": "Kawasaki Ninja",
       "sold": false,
       "price": 3500.0,
-      "picture": "../public/images/kawa-ninja.jpg",
+      "picture": "/images/kawa-ninja.jpg",
       "tags": ["motor"]
     },
     {
       "name": "iPhone 3GS",
       "sold": false,
       "price": 50.0,
-      "picture": "../public/images/iphone-3g.png",
+      "picture": "/images/iphone-3g.jpg",
       "tags": ["lifestyle", "mobile"]
     },
     {
       "name": "Samsung S10",
       "sold": true,
       "price": 500.5,
-      "picture": "../public/images/samsung-s10.png",
+      "picture": "/images/samsung-s10.jpg",
       "tags": ["mobile"]
     },
     {
       "name": "Monitor HP Full HD",
       "sold": true,
       "price": 37.0,
-      "picture": "../public/images/monitor-hp.png",
+      "picture": "/images/monitor-hp.jpg",
       "tags": ["lifestyle", "work"]
     },
     {
-      "nombre": "Teclado Logitech",
+      "name": "Teclado Logitech",
       "sold": false,
       "price": 5.0,
-      "picture": "../public/images/keyboard-logitech.png",
+      "picture": "/images/keyboard-logitech.jpg",
       "tags": ["work"]
     }
   ]

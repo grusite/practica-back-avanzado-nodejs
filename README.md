@@ -26,3 +26,5 @@ http://localhost:3000/apiv1/anuncios
 
 tags:
 limit: numeric. Limits the number of results returned
+
+####

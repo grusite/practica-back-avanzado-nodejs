@@ -50,8 +50,6 @@ module.exports = {
         filter.tags = { $in: tag };
       }
 
-      console.log(filter);
-
       const ads = await Ad.list({
         filter: filter,
         skip,
@@ -59,8 +57,10 @@ module.exports = {
         fields,
         sort
       });
+      console.log(ads);
 
-      res.json({ success: true, results: ads });
+      // res.json({ success: true, results: ads });
+      res.render("index", { ads: ads });
     } catch (err) {
       next(err);
     }
@@ -74,7 +74,9 @@ module.exports = {
     try {
       const _id = req.params.id;
 
-      const ad = await Ad.findById(_id).exec();
+      const ad = [await Ad.findById(_id).exec()];
+
+      console.log(ad);
 
       if (!ad) {
         res
@@ -83,7 +85,8 @@ module.exports = {
         return;
       }
 
-      res.json({ success: true, result: ad });
+      // res.json({ success: true, result: ad });
+      res.render("index", { ads: ad });
     } catch (err) {
       next(err);
     }
