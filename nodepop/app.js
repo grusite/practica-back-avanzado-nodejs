@@ -1,17 +1,16 @@
-var createError = require("http-errors");
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
-var logger = require("morgan");
+const createError = require("http-errors");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const db = require("./lib/db");
 
 const indexRouter = require("./routes/index");
 const adsRouter = require("./routes/apiv1/advertisements");
-// var usersRouter = require("./routes/users");
 
-var app = express();
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -39,7 +38,6 @@ app.use(function(req, res, next) {
 });
 
 db.connect();
-// db.disconnect();
 
 /**
  * Rutas de mi API
@@ -47,15 +45,13 @@ db.connect();
 app.use("/", indexRouter);
 app.use("/apiv1/anuncios", adsRouter);
 
-// app.use("/users", usersRouter);
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function(err, req, res) {
   // comprobar error de validación
   if (err.array) {
     // error de validación

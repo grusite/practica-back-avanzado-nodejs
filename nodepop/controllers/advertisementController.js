@@ -5,7 +5,7 @@ module.exports = {
    * GET /anuncios
    * Devuelve una lista de anuncios
    * Por ejemplo
-   *  http://localhost:3000/apiv1/anuncios?limit=2&skip=2&fields=name age -_id
+   *  http://localhost:3000/apiv1/anuncios?limit=2&skip=2&fields=name
    */
   async listAds(req, res, next) {
     try {
@@ -57,7 +57,6 @@ module.exports = {
         fields,
         sort
       });
-      console.log(ads);
 
       // res.json({ success: true, results: ads });
       res.render("index", { ads: ads });
@@ -75,8 +74,6 @@ module.exports = {
       const _id = req.params.id;
 
       const ad = [await Ad.findById(_id).exec()];
-
-      console.log(ad);
 
       if (!ad) {
         res
