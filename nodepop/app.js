@@ -9,7 +9,9 @@ const bodyParser = require('body-parser')
 const db = require('./lib/db')
 
 const indexRouter = require('./routes/index')
+const registerRouter = require('./routes/register')
 const loginRouter = require('./routes/login')
+const logoutRouter = require('./routes/logout')
 const adsRouter = require('./routes/apiv1/advertisements')
 
 const app = express()
@@ -57,7 +59,9 @@ app.use(
  * Rutas de mi API
  */
 app.use('/', indexRouter)
+app.use('/register', registerRouter)
 app.use('/login', loginRouter)
+app.use('/logout', logoutRouter)
 app.use('/apiv1/anuncios', adsRouter)
 
 // catch 404 and forward to error handler

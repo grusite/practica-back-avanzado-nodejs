@@ -1,3 +1,4 @@
+const providerService = require('../services/providerService')
 const debug = require('debug')('app:user')
 const { InvalidCredentials, Unauthorized } = require('../lib/exceptionPool')
 
@@ -29,6 +30,8 @@ module.exports = {
 
     // create session
     const session = await createSession(user)
+
+    res.render('login')
 
     // Return session bearer
     return { bearer: session.bearer }

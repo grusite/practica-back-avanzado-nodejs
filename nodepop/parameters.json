@@ -1,0 +1,26 @@
+{
+  "listenPort": 3000,
+  "mongodbConnectionUri": "mongodb://127.0.0.1:27017/",
+  "mail": {
+    "sender": "noreply@nodepop.es",
+    "transport": "sandbox",
+    "transports": {
+      "live": {
+        "host": "smtp.mailgun.org",
+        "port": 587,
+        "auth": {
+          "user": "postmaster@mg.misescapes.es",
+          "pass": "..."
+        }
+      },
+      "sandbox": {
+        "host": "smtp.mailtrap.io",
+        "port": 2525,
+        "auth": {
+          "user": "bc939bb2e211dd",
+          "pass": "8ac57ed0838855"
+        }
+      }
+    }
+  }
+}

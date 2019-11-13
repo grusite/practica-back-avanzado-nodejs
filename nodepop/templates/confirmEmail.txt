@@ -1,0 +1,7 @@
+Por favor confirma tu correo abriendo el siguiente enlace.
+
+<%= url %>
+
+- Mis Escapes
+
+Síguenos en @mis_escapes

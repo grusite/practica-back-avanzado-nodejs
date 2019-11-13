@@ -1,0 +1,10 @@
+const express = require('express')
+const router = express.Router()
+const userController = require('../../controllers/userController')
+
+router.use('/', userController.requireNoUser)
+router.post('/', userController.register)
+router.post('/verify', userController.verify)
+router.post('/verify-resend', userController.verifyResend)
+router.post('/forgot-password', userController.forgotPassword)
+router.post('/change-password', userController.changePassword)
