@@ -1,8 +1,26 @@
 {
-  "AboutUs": "SOBRE NOSOTROS",
+  "AboutUs": "ABOUT US",
   "FAQS": "FAQS",
-  "Mouse": {
-    "one": "%s mouse",
-    "other": "%s mice"
-  }
+  "Contact": "CONTACT",
+  "TermsAndCond": "TERMS Y CONDITIONS",
+  "PersonalData": "PERSONAL DATA POLITICS",
+  "Home": "Home",
+  "Categoríes": "Categoríes",
+  "Recents": "More Recents",
+  "Favs": "My favourites",
+  "SignIn": "Login",
+  "SignUp": "Sign Up",
+  "AdsList": "Advertisement list",
+  "Access": "Access",
+  "User": "User",
+  "Password": "Password",
+  "ForgotPassword": "I'va forgotten my password",
+  "NotAccount": "I do not have an account",
+  "UserIntro": "Introduce User",
+  "PassIntro": "Introduce Password",
+  "PassLink": "Use the next link to change your password.",
+  "ChangePasswd": "Change password",
+  "FollowUs": "Follow us in ",
+  "EmailConfirmLink": "Please, confirm your email clicking in the next link.",
+  "EmailConfirm": "Confirm email"
 }

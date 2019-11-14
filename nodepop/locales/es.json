@@ -1,4 +1,26 @@
 {
   "AboutUs": "SOBRE NOSOTROS",
-  "FAQS": "FAQS"
+  "FAQS": "FAQS",
+  "Contact": "CONTACTO",
+  "TermsAndCond": "TERMINOS Y CONDICIONES",
+  "PersonalData": "POLITICA DE DATOS PERSONALES",
+  "Home": "Home",
+  "Categoríes": "Categorías",
+  "Recents": "Más recientes",
+  "Favs": "Mis favoritos",
+  "SignIn": "ENTRAR",
+  "SignUp": "REGISTRARTE",
+  "AdsList": "Lista de anuncios",
+  "Access": "Acceso",
+  "User": "Usuario",
+  "Password": "Contraseña",
+  "ForgotPassword": "He olvidado mi contraseña",
+  "NotAccount": "Todavía no tengo cuenta",
+  "UserIntro": "Introduzca Usuario",
+  "PassIntro": "Introduzca Contraseña",
+  "PassLink": "Usa el siguiente enlace para cambiar tu contraseña.",
+  "ChangePasswd": "Cambiar contraseña",
+  "FollowUs": "Síguenos en ",
+  "EmailConfirmLink": "Por favor confirma tu correo pulsando el siguiente enlace.",
+  "EmailConfirm": "Confirmar correo"
 }
