@@ -15,7 +15,8 @@ const {
 
 module.exports = {
   async login(req, res, next) {
-    const { provider, payload } = req.body
+    const provider = 'traditional'
+    const payload = req.body
 
     // Get user
     const user = await getUserFromCredentials(provider, payload, next)
@@ -115,7 +116,7 @@ async function getUserFromCredentials(provider, payload, next) {
 
   // Traditional
   if (provider === 'traditional') {
-    return getTraditionalUser(payload)
+    return getTraditionalUser(payload, next)
   }
 
   // Social
@@ -123,10 +124,10 @@ async function getUserFromCredentials(provider, payload, next) {
   try {
     // Get profile from provider
     if (provider === 'google') {
-      profile = await providerService.getProfileFromGoogle(payload)
+      profile = await providerService.getProfileFromGoogle(payload, next)
     }
     if (provider === 'facebook') {
-      profile = await providerService.getProfileFromFacebook(payload)
+      profile = await providerService.getProfileFromFacebook(payload, next)
     }
   } catch (err) {
     next(new InvalidCredentials(err.message))

@@ -49,24 +49,24 @@ async function verifyTraditionalUser(userId, verifyEmailKey) {
   await user.save()
 }
 
-async function getTraditionalUser({ email, password }) {
-  const user = await findUserByEmailPassword(email, password)
+async function getTraditionalUser({ email, password }, next) {
+  const user = await findUserByEmailPassword(email, password, next)
 
   if (!user.isVerified()) {
-    throw new InvalidCredentials({ reason: 'userNotVerified' })
+    next(new InvalidCredentials({ reason: 'userNotVerified' }))
   }
 
   return user
 }
 
-async function findUserByEmailPassword(email, password) {
+async function findUserByEmailPassword(email, password, next) {
   const user = await User.findOne({ email })
   if (!user) {
-    throw new InvalidCredentials({ reason: 'userNotFound' })
+    next(new InvalidCredentials({ reason: 'userNotFound' }))
   }
 
   if (!(await user.comparePassword(password))) {
-    throw new InvalidCredentials({ reason: 'invalidPassword' })
+    next(new InvalidCredentials({ reason: 'invalidPassword' }))
   }
   return user
 }
