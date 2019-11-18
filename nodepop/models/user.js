@@ -52,7 +52,7 @@ schema.methods.hasProvider = function(type) {
   return obj.provider && obj.provider[type]
 }
 
-schema.methods.isVerified = function(type) {
+schema.methods.isVerified = function() {
   const obj = this.toObject()
   return obj.provider && obj.provider.traditional && !obj.provider.traditional.key.verifyEmail
 }

@@ -1,30 +1,11 @@
 const nanoid = require('nanoid/async')
 const User = require('../models/User')
-const Session = require('../models/Session')
 const { InvalidCredentials, TooSoon } = require('../lib/exceptionPool')
-const { sendVerifyMail, sendForgotPasswordMail, validateEmail } = require('../services/mailService')
-
-/**
- * Create a session document for a user
- * @param {Document} user
- */
-async function createSession(user) {
-  const session = new Session({
-    userId: user._id,
-    bearer: await nanoid(24),
-  })
-  await session.save()
-  return session
-}
-
-/**
- * Touch a document to force update timestamps
- * @param {Document} doc
- */
-async function touchSession(doc) {
-  doc.updatedAt = null
-  await doc.save()
-}
+const {
+  sendVerifyMail,
+  sendForgotPasswordMail,
+  validateEmail,
+} = require('../services/mailServices')
 
 /**
  * Create or update a user document, using email as glue
@@ -47,16 +28,6 @@ async function createUserFromProfile(provider, profile) {
 
 async function getUserFromEmail(email) {
   return User.findOne({ email })
-}
-
-/**
- * Find session and its user
- * @param {String} bearer Session bearer
- */
-async function getUserAndSessionFromBearer(bearer) {
-  const session = await Session.findOne({ bearer })
-  const user = session && (await User.findById(session.userId))
-  return { user, session }
 }
 
 async function verifyTraditionalUser(userId, verifyEmailKey) {
@@ -185,10 +156,7 @@ function now() {
   return (Date.now() / 1000) | 0
 }
 module.exports = {
-  createSession,
-  touchSession,
   createUserFromProfile,
-  getUserAndSessionFromBearer,
   getUserFromEmail,
   verifyTraditionalUser,
   verifyResendEmail,

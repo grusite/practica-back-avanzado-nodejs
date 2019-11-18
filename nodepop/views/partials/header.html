@@ -7,14 +7,16 @@
 
   <div class="left-menu">
     <ul class="navbar-list">
-      <li class="navbar-item"><a href="#"><%= __('Home') =></a></li>
+      <li class="navbar-item"><a href="#"><%= __('Home') %></a></li>
       <li class="navbar-item">
-        <a id="categories" href="#"><%= __('Categoríes') =></a>
+        <a id="categories" href="#"><%= __('Categoríes') %></a>
       </li>
       <li class="navbar-item">
-        <a id="most-recent" href="#"><%= __('Recents') =></a>
+        <% getLocales().forEach( locale => { %>
+        <a href="/change-locale/<%= locale %>"><%= locale %></a>
+        <% }) %>
       </li>
-      <li class="navbar-item"><a href="#"><%= __('Favs') =></a></li>
+      <li class="navbar-item"><a href="#"><%= __('Favs') %></a></li>
     </ul>
   </div>
 
@@ -25,11 +27,17 @@
           <img src="/images/baseline_search_white_24dp.png" alt="Search Icon" />
         </a>
       </li>
+      <% if (!user) { %>
       <li class="navbar-item">
-        <a id="login" href="#"><%= __('SignIn') =></a>
+        <a id="login" href="/login"><%= __('SignIn') %></a>
       </li>
+      <% } else { %>
       <li class="navbar-item">
-        <a id="sign-up" href="#"><%= __('SignUp') =></a>
+        <a id="login" href="/login"><%= __('SignOut') %></a>
+      </li>
+      <% } %>
+      <li class="navbar-item">
+        <a id="sign-up" href="#"><%= __('SignUp') %></a>
       </li>
       <li id="user-icon" class="navbar-item">
         <a href="login.html"><img src="/images/user-icon-40.png" alt=""/></a>

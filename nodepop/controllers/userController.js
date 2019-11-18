@@ -1,68 +1,61 @@
 const providerService = require('../services/providerService')
 const debug = require('debug')('app:user')
 const { InvalidCredentials, Unauthorized } = require('../lib/exceptionPool')
+const jwt = require('jsonwebtoken')
 
 const {
-  createSession,
-  touchSession,
   createUserFromProfile,
-  getUserAndSessionFromBearer,
   verifyTraditionalUser,
   verifyResendEmail,
   getTraditionalUser,
   createTraditionalUser,
   forgotPasswordEmail,
   changeForgottenPassword,
-} = require('../services/userService')
+} = require('../services/userServices')
 
 module.exports = {
   async login(req, res) {
-    // Check if there is a current working session
-    if (req.session) {
-      await touchSession(req.session)
-      return { bearer: req.session.bearer }
-    }
-
     const { provider, payload } = req.body
 
     // Get user
     const user = await getUserFromCredentials(provider, payload)
 
-    // create session
-    const session = await createSession(user)
+    // JWT creation
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '2d',
+    })
 
-    res.render('login')
+    res.redirect('/apiv1/anuncios')
 
     // Return session bearer
-    return { bearer: session.bearer }
+    return { bearer: token }
   },
 
   async logOut(req, res) {
-    // If logged remove session from DB
-    await req.session.remove()
+    // If logged remove token in front side
+    res.redirect('/')
     return { done: true, message: 'Logout correctly' }
   },
 
   async loadUser(req, res, next) {
     const [, bearer] = (req.headers.authorization || '').split(' ')
-    if (bearer) {
-      const { user, session } = await getUserAndSessionFromBearer(bearer)
-      if (user && session) {
-        await touchSession(session)
-        req.session = session
-        req.user = user
-      }
+    if (!bearer) {
+      // next(new Unauthorized('No token provided'))
+      next()
     }
-
-    next()
+    // If not valid token I will throw user out
+    jwt.verify(bearer, process.env.JWT_SECRET, (err, payload) => {
+      req.user = payload._id
+      next()
+    })
   },
 
   async requireUser(req, res, next) {
-    if (!req.user) throw new Unauthorized()
+    if (!req.user) next(new Unauthorized())
     next()
   },
   async requireNoUser(req, res, next) {
-    if (req.user) throw new Unauthorized('User should not be logged')
+    if (req.user) next(new Unauthorized('User should not be logged'))
     next()
   },
 
