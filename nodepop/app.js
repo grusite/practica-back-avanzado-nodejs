@@ -51,7 +51,7 @@ app.use(function(req, res, next) {
   next()
 })
 
-// middleware para tener acceso a la sesión en las vistas
+// middleware para tener acceso al usuario en las vistas
 app.use((req, res, next) => {
   res.locals.user = req.user
   next()

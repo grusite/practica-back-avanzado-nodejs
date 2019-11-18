@@ -3,7 +3,7 @@ const router = express.Router()
 const advertisementController = require('../../controllers/advertisementController')
 const userController = require('../../controllers/userController')
 
-router.use('/', userController.requireUser)
+router.use('/', userController.loadUser)
 router.get('/', advertisementController.listAds)
 router.get('/tags/', advertisementController.listTags)
 router.get('/:id', advertisementController.listAdbyId)

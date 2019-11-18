@@ -14,11 +14,11 @@ const {
 } = require('../services/userServices')
 
 module.exports = {
-  async login(req, res) {
+  async login(req, res, next) {
     const { provider, payload } = req.body
 
     // Get user
-    const user = await getUserFromCredentials(provider, payload)
+    const user = await getUserFromCredentials(provider, payload, next)
 
     // JWT creation
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
@@ -33,6 +33,7 @@ module.exports = {
 
   async logOut(req, res) {
     // If logged remove token in front side
+    res.locals.user = ''
     res.redirect('/')
     return { done: true, message: 'Logout correctly' }
   },
@@ -40,8 +41,8 @@ module.exports = {
   async loadUser(req, res, next) {
     const [, bearer] = (req.headers.authorization || '').split(' ')
     if (!bearer) {
-      // next(new Unauthorized('No token provided'))
-      next()
+      next(new Unauthorized('No token provided'))
+      //   next()
     }
     // If not valid token I will throw user out
     jwt.verify(bearer, process.env.JWT_SECRET, (err, payload) => {
@@ -104,12 +105,12 @@ module.exports = {
  * @param {String} provider google|facebook|traditional
  * @param {Object} payload Provider needed info to login
  */
-async function getUserFromCredentials(provider, payload) {
+async function getUserFromCredentials(provider, payload, next) {
   if (!['google', 'facebook', 'traditional'].includes(provider)) {
-    throw new InvalidCredentials('Invalid provider')
+    next(new InvalidCredentials('Invalid provider'))
   }
   if (!payload || typeof payload !== 'object') {
-    throw new InvalidCredentials('Invalid payload')
+    next(new InvalidCredentials('Invalid payload'))
   }
 
   // Traditional
@@ -128,7 +129,7 @@ async function getUserFromCredentials(provider, payload) {
       profile = await providerService.getProfileFromFacebook(payload)
     }
   } catch (err) {
-    throw new InvalidCredentials(err.message)
+    next(new InvalidCredentials(err.message))
   }
   debug('login', provider, profile)
   return createUserFromProfile(provider, profile)
