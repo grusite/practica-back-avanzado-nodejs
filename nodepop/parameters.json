@@ -8,7 +8,7 @@
         "host": "smtp.mailgun.org",
         "port": 587,
         "auth": {
-          "user": "postmaster@mg.misescapes.es",
+          "user": "postmaster@mg.nodepop.es",
           "pass": "..."
         }
       },
@@ -16,8 +16,8 @@
         "host": "smtp.mailtrap.io",
         "port": 2525,
         "auth": {
-          "user": "bc939bb2e211dd",
-          "pass": "8ac57ed0838855"
+          "user": "dd7dbde78d7a84",
+          "pass": "d98287eb6ce0a8"
         }
       }
     }

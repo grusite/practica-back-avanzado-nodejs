@@ -2,13 +2,14 @@ const createError = require('http-errors')
 const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
+const expressDeliver = require('express-deliver')
 const logger = require('morgan')
 const isDev = process.env.NODE_ENV === 'development'
 const exceptionPool = require('./lib/exceptionPool')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const db = require('./lib/db')
-const { getMorganConfig } = require('./lib/utils')
+const { printDeliverError, getMorganConfig } = require('./lib/utils')
 
 const indexRouter = require('./routes/index')
 const changeLocale = require('./routes/change-locale')
@@ -37,6 +38,13 @@ app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+expressDeliver(app, {
+  printErrorStack: false,
+  printInternalErrorData: isDev,
+  exceptionPool,
+  onError: printDeliverError,
+})
+
 /**
  * Setup de i18n
  */
@@ -47,7 +55,7 @@ app.use(i18n.init)
  * Error in mongodb conection if not ready
  */
 app.use(function(req, res, next) {
-  if (db.connection.readyState !== 1) next(new exceptionPool.NoDatabase())
+  if (db.connection.readyState !== 1) throw new exceptionPool.NoDatabase()
   next()
 })
 
@@ -67,13 +75,15 @@ app.use('/login', loginRouter)
 app.use('/logout', logoutRouter)
 app.use('/apiv1/anuncios', adsRouter)
 
+// expressDeliver.errorHandler(app)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404))
 })
 
 // error handler
-app.use(function(err, req, res) {
+app.use(function(err, req, res, next) {
   // comprobar error de validación
   if (err.array) {
     // error de validación
@@ -93,12 +103,15 @@ app.use(function(err, req, res) {
 
   // set locals, only providing error in development
   res.locals.message = err.message
-  res.locals.reason = err.reason
+  // res.locals.reason = err.data.reason
   res.locals.error = req.app.get('env') === 'development' ? err : {}
 
   // render the error page
+  // next('ignore')
   res.render('error')
 })
+
+expressDeliver.errorHandler(app)
 
 function isAPI(req) {
   return req.originalUrl.indexOf('/apiv') === 0

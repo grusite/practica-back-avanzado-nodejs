@@ -14,17 +14,20 @@ const {
 } = require('../services/userServices')
 
 module.exports = {
-  async login(req, res, next) {
+  async login(req, res) {
     const provider = 'traditional'
     const payload = req.body
 
     // Get user
-    const user = await getUserFromCredentials(provider, payload, next)
+    const user = await getUserFromCredentials(provider, payload)
 
     // JWT creation
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '2d',
     })
+
+    // Añadimos a la cabecera el "Authorization" Bearer
+    req.set('Authorization', 'Bearer ' + token)
 
     res.redirect('/apiv1/anuncios')
 
@@ -42,7 +45,7 @@ module.exports = {
   async loadUser(req, res, next) {
     const [, bearer] = (req.headers.authorization || '').split(' ')
     if (!bearer) {
-      next(new Unauthorized('No token provided'))
+      throw new Unauthorized('No token provided')
       //   next()
     }
     // If not valid token I will throw user out
@@ -53,11 +56,11 @@ module.exports = {
   },
 
   async requireUser(req, res, next) {
-    if (!req.user) next(new Unauthorized())
+    if (!req.user) throw new Unauthorized()
     next()
   },
   async requireNoUser(req, res, next) {
-    if (req.user) next(new Unauthorized('User should not be logged'))
+    if (req.user) throw new Unauthorized('User should not be logged')
     next()
   },
 
@@ -68,6 +71,7 @@ module.exports = {
   async register(req, res) {
     const { email, name, password } = req.body
     await createTraditionalUser({ email, name, password })
+    // res.redirect('/apiv1/anuncios')
     return { done: true, message: `Message sent to ${email}` }
   },
 
@@ -106,17 +110,17 @@ module.exports = {
  * @param {String} provider google|facebook|traditional
  * @param {Object} payload Provider needed info to login
  */
-async function getUserFromCredentials(provider, payload, next) {
+async function getUserFromCredentials(provider, payload) {
   if (!['google', 'facebook', 'traditional'].includes(provider)) {
-    next(new InvalidCredentials('Invalid provider'))
+    throw new InvalidCredentials('Invalid provider')
   }
   if (!payload || typeof payload !== 'object') {
-    next(new InvalidCredentials('Invalid payload'))
+    throw new InvalidCredentials('Invalid payload')
   }
 
   // Traditional
   if (provider === 'traditional') {
-    return getTraditionalUser(payload, next)
+    return getTraditionalUser(payload)
   }
 
   // Social
@@ -124,13 +128,13 @@ async function getUserFromCredentials(provider, payload, next) {
   try {
     // Get profile from provider
     if (provider === 'google') {
-      profile = await providerService.getProfileFromGoogle(payload, next)
+      profile = await providerService.getProfileFromGoogle(payload)
     }
     if (provider === 'facebook') {
-      profile = await providerService.getProfileFromFacebook(payload, next)
+      profile = await providerService.getProfileFromFacebook(payload)
     }
   } catch (err) {
-    next(new InvalidCredentials(err.message))
+    throw new InvalidCredentials(err.message)
   }
   debug('login', provider, profile)
   return createUserFromProfile(provider, profile)

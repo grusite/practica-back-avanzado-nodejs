@@ -1,7 +1,10 @@
 const express = require('express')
+const expressDeliver = require('express-deliver')
 const router = express.Router()
 const advertisementController = require('../../controllers/advertisementController')
 const userController = require('../../controllers/userController')
+
+expressDeliver(router)
 
 router.use('/', userController.loadUser)
 router.get('/', advertisementController.listAds)

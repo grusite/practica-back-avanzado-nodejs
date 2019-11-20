@@ -3,9 +3,9 @@
 const { FB } = require('fb')
 const { OAuth2Client } = require('google-auth-library')
 
-exports.getProfileFromFacebook = async ({ accessToken, next }) => {
+exports.getProfileFromFacebook = async ({ accessToken }) => {
   const app = await FB.api('app', { access_token: accessToken })
-  if (app.id !== process.env.FB_APPID) next(new Error('invalid app id'))
+  if (app.id !== process.env.FB_APPID) throw new Error('invalid app id')
 
   const { id, email, name } = await FB.api('me', {
     fields: 'id,name,email',

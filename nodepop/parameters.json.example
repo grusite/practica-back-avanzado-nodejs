@@ -1,0 +1,25 @@
+{
+  "frontUrl": "http://localhost:3000",
+  "mail": {
+    "sender": "email sender",
+    "transport": "sandbox",
+    "transports": {
+      "live": {
+        "host": "prodction mailer host",
+        "port": xxx,
+        "auth": {
+          "user": "...",
+          "pass": "..."
+        }
+      },
+      "sandbox": {
+        "host": "dev mailer host",
+        "port": xxx,
+        "auth": {
+          "user": "...",
+          "pass": "..."
+        }
+      }
+    }
+  }
+}
