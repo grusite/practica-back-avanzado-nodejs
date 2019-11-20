@@ -46,7 +46,6 @@ module.exports = {
     const [, bearer] = (req.headers.authorization || '').split(' ')
     if (!bearer) {
       throw new Unauthorized('No token provided')
-      //   next()
     }
     // If not valid token I will throw user out
     jwt.verify(bearer, process.env.JWT_SECRET, (err, payload) => {
