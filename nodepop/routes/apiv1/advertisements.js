@@ -6,7 +6,7 @@ const userController = require('../../controllers/userController')
 
 expressDeliver(router)
 
-router.use('/', userController.loadUser)
+// router.use('/', userController.loadUser)
 router.get('/', advertisementController.listAds)
 router.get('/tags/', advertisementController.listTags)
 router.get('/:id', advertisementController.listAdbyId)

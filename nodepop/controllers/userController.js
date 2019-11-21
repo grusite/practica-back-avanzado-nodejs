@@ -27,9 +27,11 @@ module.exports = {
     })
 
     // Añadimos a la cabecera el "Authorization" Bearer
-    req.set('Authorization', 'Bearer ' + token)
+    res.set('Authorization', 'Bearer ' + token)
 
-    res.redirect('/apiv1/anuncios')
+    setTimeout(() => {
+      res.redirect('/apiv1/anuncios')
+    }, 2000)
 
     // Return session bearer
     return { bearer: token }
@@ -56,6 +58,7 @@ module.exports = {
 
   async requireUser(req, res, next) {
     if (!req.user) throw new Unauthorized()
+    res.redirect('/login')
     next()
   },
   async requireNoUser(req, res, next) {

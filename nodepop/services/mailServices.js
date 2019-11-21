@@ -8,14 +8,8 @@ const _ = require('lodash')
 const fs = require('fs-extra')
 const { resolve } = require('path')
 
-function loadFile(name) {
-  fs.readFileSync(resolve(__dirname, `../views/templates/${name}`))
-}
-
-const getTemplate = name => {
-  _.template(loadFile(name))
-}
-
+const getTemplate = name =>
+  _.template(fs.readFileSync(resolve(__dirname, `../views/templates/${name}`)))
 const confirmEmailHtmlTpl = getTemplate('confirmEmail.html')
 const confirmEmailTextTpl = getTemplate('confirmEmail.txt')
 const changePasswordHtmlTpl = getTemplate('changePassword.html')

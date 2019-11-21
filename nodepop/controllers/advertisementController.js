@@ -1,4 +1,4 @@
-const Ad = require("../models/advertisement");
+const Ad = require('../models/advertisement')
 
 module.exports = {
   /**
@@ -9,45 +9,45 @@ module.exports = {
    */
   async listAds(req, res, next) {
     try {
-      const name = req.query.name;
-      const sold = req.query.sold;
-      const price = req.query.price;
-      const tag = req.query.tag;
-      const skip = parseInt(req.query.start);
-      const limit = parseInt(req.query.limit);
-      const fields = req.query.fields;
-      const sort = req.query.sort;
+      const name = req.query.name
+      const sold = req.query.sold
+      const price = req.query.price
+      const tag = req.query.tag
+      const skip = parseInt(req.query.start)
+      const limit = parseInt(req.query.limit)
+      const fields = req.query.fields
+      const sort = req.query.sort
 
-      const filter = {};
+      const filter = {}
 
       if (name) {
-        filter.name = new RegExp("^" + name, "i");
+        filter.name = new RegExp('^' + name, 'i')
       }
 
-      if (typeof sold !== "undefined") {
-        filter.sold = sold;
+      if (typeof sold !== 'undefined') {
+        filter.sold = sold
       }
 
       if (price) {
-        const greater = /^[0-9]+-$/g.test(price);
-        const between = /^[0-9]+-[0-9]+$/g.test(price);
-        const less = /^-[0-9]+$/g.test(price);
+        const greater = /^[0-9]+-$/g.test(price)
+        const between = /^[0-9]+-[0-9]+$/g.test(price)
+        const less = /^-[0-9]+$/g.test(price)
 
-        const [gte, lte] = price.split("-");
+        const [gte, lte] = price.split('-')
 
         if (greater) {
-          filter.price = { $gte: gte };
+          filter.price = { $gte: gte }
         } else if (between) {
-          filter.price = { $gte: gte, $lte: lte };
+          filter.price = { $gte: gte, $lte: lte }
         } else if (less) {
-          filter.price = { $lte: lte };
+          filter.price = { $lte: lte }
         } else {
-          filter.price = price;
+          filter.price = price
         }
       }
 
       if (tag) {
-        filter.tags = { $in: tag };
+        filter.tags = { $in: tag }
       }
 
       const ads = await Ad.list({
@@ -55,13 +55,13 @@ module.exports = {
         skip,
         limit,
         fields,
-        sort
-      });
+        sort,
+      })
 
       // res.json({ success: true, results: ads });
-      res.render("index", { ads: ads });
+      res.render('index', { ads: ads })
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
 
@@ -71,21 +71,19 @@ module.exports = {
    */
   async listAdbyId(req, res, next) {
     try {
-      const _id = req.params.id;
+      const _id = req.params.id
 
-      const ad = [await Ad.findById(_id).exec()];
+      const ad = [await Ad.findById(_id).exec()]
 
       if (!ad) {
-        res
-          .status(404)
-          .json({ success: false, message: "Advertisement Not Found" });
-        return;
+        res.status(404).json({ success: false, message: 'Advertisement Not Found' })
+        return
       }
 
       // res.json({ success: true, result: ad });
-      res.render("index", { ads: ad });
+      res.render('index', { ads: ad })
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
 
@@ -95,10 +93,10 @@ module.exports = {
    */
   async listTags(req, res, next) {
     try {
-      const uniqueTags = await Ad.find().distinct("tags");
-      res.json({ success: true, result: uniqueTags });
+      const uniqueTags = await Ad.find().distinct('tags')
+      res.json({ success: true, result: uniqueTags })
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
 
@@ -108,15 +106,15 @@ module.exports = {
    */
   async addAd(req, res, next) {
     try {
-      const data = req.body;
+      const data = req.body
 
-      const ad = new Ad(data);
+      const ad = new Ad(data)
 
-      const adSaved = await ad.save();
+      const adSaved = await ad.save()
 
-      res.json({ success: true, result: adSaved });
+      res.json({ success: true, result: adSaved })
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
 
@@ -126,27 +124,25 @@ module.exports = {
    */
   async updateAd(req, res, next) {
     try {
-      const _id = req.params.id;
-      const data = req.body;
+      const _id = req.params.id
+      const data = req.body
 
       const adSaved = await Ad.findOneAndUpdate(
         { _id: _id },
         { $set: data },
         {
-          new: true
+          new: true,
         }
-      ).exec();
+      ).exec()
 
       if (!adSaved) {
-        res
-          .status(404)
-          .json({ success: false, message: "Advertisement Not Found" });
-        return;
+        res.status(404).json({ success: false, message: 'Advertisement Not Found' })
+        return
       }
 
-      res.json({ success: true, result: adSaved });
+      res.json({ success: true, result: adSaved })
     } catch (err) {
-      next(err);
+      next(err)
     }
   },
 
@@ -156,22 +152,20 @@ module.exports = {
    */
   async deleteAd(req, res, next) {
     try {
-      const _id = req.params.id;
+      const _id = req.params.id
 
-      const ad = await Ad.findById(_id).exec();
+      const ad = await Ad.findById(_id).exec()
 
       if (!ad) {
-        res
-          .status(404)
-          .json({ success: false, message: "Advertisement Not Found" });
-        return;
+        res.status(404).json({ success: false, message: 'Advertisement Not Found' })
+        return
       }
 
-      await Ad.deleteOne(ad).exec();
+      await Ad.deleteOne(ad).exec()
 
-      res.json({ success: true });
+      res.json({ success: true })
     } catch (err) {
-      next(err);
+      next(err)
     }
-  }
-};
+  },
+}

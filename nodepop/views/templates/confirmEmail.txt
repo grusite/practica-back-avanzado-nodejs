@@ -2,6 +2,6 @@ Por favor confirma tu correo abriendo el siguiente enlace.
 
 <%= url %>
 
-- Mis Escapes
+- NodePop
 
-Síguenos en @mis_escapes
+Síguenos en @nodepop
