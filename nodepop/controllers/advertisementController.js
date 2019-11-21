@@ -1,4 +1,6 @@
 const Ad = require('../models/advertisement')
+const responderWorker = require('../services/thumbnailService/server')
+const requesterWorker = require('../services/thumbnailService/client')
 
 module.exports = {
   /**
@@ -108,7 +110,9 @@ module.exports = {
     try {
       const data = req.body
 
-      data.picture = '/images/' + req.file.filename
+      const imgPath = `/images/${req.file.filename}`
+
+      data.picture = imgPath
 
       const ad = new Ad(data)
 
