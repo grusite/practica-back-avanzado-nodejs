@@ -108,6 +108,8 @@ module.exports = {
     try {
       const data = req.body
 
+      data.picture = '/images/' + req.file.filename
+
       const ad = new Ad(data)
 
       const adSaved = await ad.save()
