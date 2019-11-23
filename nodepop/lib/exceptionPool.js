@@ -23,11 +23,6 @@ module.exports = new expressDeliver.ExceptionPool({
     statusCode: 404,
     message: 'Item not found',
   },
-  ImgError: {
-    code: 2004,
-    statusCode: 501,
-    message: 'Image Thumbnail Error',
-  },
   InvalidJSON: {
     code: 2003,
     statusCode: 400,

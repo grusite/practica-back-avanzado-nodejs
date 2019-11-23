@@ -1,6 +1,7 @@
 const Ad = require('../models/advertisement')
-const responderWorker = require('../services/thumbnailService/server')
-const requesterWorker = require('../services/thumbnailService/client')
+// const requesterWorker = require('../services/thumbnailService/client')
+const cote = require('cote')
+const requester = new cote.Requester({ name: 'thumbnail creation requester' })
 
 module.exports = {
   /**
@@ -113,6 +114,13 @@ module.exports = {
       const imgPath = `/images/${req.file.filename}`
 
       data.picture = imgPath
+
+      requester.send(
+        { type: 'create', file: `../public/${imgPath}`, fileName: req.file.filename },
+        (err, res) => {
+          console.log(res)
+        }
+      )
 
       const ad = new Ad(data)
 
