@@ -29,7 +29,7 @@ Repositorio usado para realizar la práctica del tercer módulo del bootcamp -> 
 
 ## Notes
 
-<b>To start the app the worker must be started</b>.
+<b>To start the app the worker must be started</b> `node services/thumbnailWorker.js`.
 
 I have made the server to be ready to register, send email to verify the same, verify the user, resend an email with the verification token and change the user password. I have only implemented login and register EJS view, so the rest could be only tested using <b>Postman</b>.
 
