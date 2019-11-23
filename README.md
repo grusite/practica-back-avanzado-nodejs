@@ -15,14 +15,50 @@ Repositorio usado para realizar la práctica del tercer módulo del bootcamp -> 
 * locales -> where I store languages dictionary
 * public -> all necesary to interact with frontal made by EJS
 * services -> services that other part of the app will use
+* .env -> file with user information. The person who runs the code will need to refill the data
 
 ## EJS - Front
 
 - [http://localhost:3000/register](http://localhost:3000/register)
-  - PAge to register an user. Once registered, the
+  - Page to register an user. Once registered, it will send an email to the user with a Link to the url with the token. The locale selection is at the bottom
 - [http://localhost:3000/login](http://localhost:3000/login)
-  - Page that makes user login. It will return the <b>JWT Token</b>
+  - Page that makes user login. It will return the <b>JWT Token</b>. The locale selection is at the bottom
 - [http://localhost:3000/apiv1/anuncios](http://localhost:3000/apiv1/anuncios)
+  - Page with the user advertisements. The user must have been registered, verified and logged (in this order). The locale selection is at the header
+
+## Notes
+
+I have made the server to be ready to register, send email to verify the same, verify the user, resend an email with the verification token and change the user password. I have only implemented login and register EJS view, so the rest could be only tested using <b>Postman</b>.
+
+## Postman Tests
+
+1. POST to [http://localhost:3000/register](http://localhost:3000/register):
+
+   - Body x-www-form-urlencoded
+   - name
+   - email
+   - password
+
+2. Open Mailtrap and login with your user. Get user and password and copy in .env file (you must create it first)
+
+3. Check mail and get the token in it (http://localhost:3000/confirm/<token>)
+
+4. POST to [http://localhost:3000/register/verify](http://localhost:3000/register/verify):
+
+   - token from the url
+
+5. POST to [http://localhost:3000/login](http://localhost:3000/login):
+
+   - email from the register
+   - password from the register
+
+6. Store the token given in the login response
+
+7. GET to [http://localhost:3000/apiv1/anuncios](http://localhost:3000/apiv1/anuncios):
+
+   - Set Authorization Bearer Token and copy the token stored in the last step
+
+8. The rest endopoints related to /apiv1/anuncios will need the authorization header
 
 ### API Methods
 

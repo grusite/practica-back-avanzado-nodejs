@@ -73,7 +73,6 @@ module.exports = {
   async register(req, res) {
     const { email, name, password } = req.body
     await createTraditionalUser({ email, name, password })
-    // res.redirect('/apiv1/anuncios')
     return { done: true, message: `Message sent to ${email}` }
   },
 
