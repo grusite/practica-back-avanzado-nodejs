@@ -23,6 +23,7 @@
         <input type="submit" value="<%= __('Access') %>" />
         <a href="#"><%= __('ForgotPassword') %></a><br />
         <a href="#"><%= __('NotAccount') %></a><br />
+        <a><%= __('Languages') %>: </a>
         <% getLocales().forEach( locale => { %>
         <a href="/change-locale/<%= locale %>"><%= locale %></a>
         <% }) %>

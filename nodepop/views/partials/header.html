@@ -11,12 +11,12 @@
       <li class="navbar-item">
         <a id="categories" href="#"><%= __('Categoríes') %></a>
       </li>
-      <li class="navbar-item">
-        <% getLocales().forEach( locale => { %>
-        <a href="/change-locale/<%= locale %>"><%= locale %></a>
-        <% }) %>
-      </li>
       <li class="navbar-item"><a href="#"><%= __('Favs') %></a></li>
+      <% getLocales().forEach( locale => { %>
+      <li class="navbar-item">
+        <a href="/change-locale/<%= locale %>"><%= locale %></a>
+      </li>
+      <% }) %>
     </ul>
   </div>
 

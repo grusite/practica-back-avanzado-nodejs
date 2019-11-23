@@ -12,8 +12,17 @@ Repositorio usado para realizar la práctica del tercer módulo del bootcamp -> 
 
 * models -> where I store the DB model
 * controllers -> where I store the route controllers
-* lib -> where I store somo db functions
+* locales -> where I store languages dictionary
 * public -> all necesary to interact with frontal made by EJS
+* services -> services that other part of the app will use
+
+## EJS - Front
+
+- [http://localhost:3000/register](http://localhost:3000/register)
+  - PAge to register an user. Once registered, the
+- [http://localhost:3000/login](http://localhost:3000/login)
+  - Page that makes user login. It will return the <b>JWT Token</b>
+- [http://localhost:3000/apiv1/anuncios](http://localhost:3000/apiv1/anuncios)
 
 ### API Methods
 

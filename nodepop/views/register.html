@@ -12,7 +12,7 @@
     <title>Dartflix</title>
   </head>
   <body>
-    <div class="login-box">
+    <div class="register-box">
       <img src="/images/db-icon_2_resized.png" alt="Avatar Diana" class="avatar-diana" />
       <h1><%= __('Register') %></h1>
       <form class="login-form" method="POST">
@@ -23,6 +23,7 @@
         <p><%= __('Password') %></p>
         <input type="password" name="password" placeholder="<%= __('PassIntro') %>" />
         <input type="submit" value="<%= __('Register') %>" />
+        <a><%= __('Languages') %>: </a>
         <% getLocales().forEach( locale => { %>
         <a href="/change-locale/<%= locale %>"><%= locale %></a>
         <% }) %>

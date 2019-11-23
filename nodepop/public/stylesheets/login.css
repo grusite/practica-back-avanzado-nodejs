@@ -18,6 +18,19 @@ body {
   padding: 50px 30px;
 }
 
+.register-box {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  height: 480px;
+  width: 520px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-sizing: border-box;
+  padding: 50px 30px;
+}
+
 .avatar-diana {
   border-radius: 50%;
   position: absolute;
