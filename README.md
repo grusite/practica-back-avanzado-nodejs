@@ -6,6 +6,7 @@ Repositorio usado para realizar la práctica del tercer módulo del bootcamp -> 
 
 - MondoDB: To start a local server execute `mongod --dbpath='/home/grusite/data/db'`
 - To init the DB execute `npm run installDB`
+- To init the worker that create image thumbnails: `node services/thumbnailWorker.js`
 - To start the server execute `npm run dev`
 - To execute linter in all files `npm run linter`
 - To start the server with the DB formated and the linter `npm run initDB-dev`
@@ -28,6 +29,8 @@ Repositorio usado para realizar la práctica del tercer módulo del bootcamp -> 
 
 ## Notes
 
+<b>To start the app the worker must be started</b>.
+
 I have made the server to be ready to register, send email to verify the same, verify the user, resend an email with the verification token and change the user password. I have only implemented login and register EJS view, so the rest could be only tested using <b>Postman</b>.
 
 ## Postman Tests
@@ -41,7 +44,7 @@ I have made the server to be ready to register, send email to verify the same, v
 
 2. Open Mailtrap and login with your user. Get user and password and copy in .env file (you must create it first)
 
-3. Check mail and get the token in it (http://localhost:3000/confirm/<token>)
+3. Check mail and get the token in it (http://localhost:3000/confirm/:tokenNumber)
 
 4. POST to [http://localhost:3000/register/verify](http://localhost:3000/register/verify):
 
