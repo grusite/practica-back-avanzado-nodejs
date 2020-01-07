@@ -1,5 +1,5 @@
 const nanoid = require('nanoid/async')
-const User = require('../models/User')
+const User = require('../models/user')
 const { InvalidCredentials, TooSoon } = require('../lib/exceptionPool')
 const {
   sendVerifyMail,
